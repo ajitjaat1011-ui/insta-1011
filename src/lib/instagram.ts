@@ -339,20 +339,20 @@ function generateAnalysis(profile: InstagramProfile): ProfileAnalysis {
     }
 
     // ---- 7. Comment rate vs tier ----
-    const commentRate = F > 0 ? (a.avgComments / F) * 100 : 0;
+    const commentRate = F > 0 ? (avgComments / F) * 100 : 0;
     const expectedCommentRate = expectedER * 0.025; // ~2.5% of ER is typically comments
     if (F > 10000 && commentRate < expectedCommentRate * 0.15) add(10, `Abnormally low comment rate – low audience quality`);
     
     // ---- 8. Likes median vs avg gap (bot spike detection) ----
-    if (a.avgLikes > 0 && a.medianLikes > 0) {
-      const likeSkew = a.avgLikes / a.medianLikes;
+    if (avgLikes > 0 && medianLikes > 0) {
+      const likeSkew = avgLikes / medianLikes;
       if (likeSkew > 2.5) add(7, `Engagement heavily skewed by viral outliers – median much lower than average`);
     }
 
     // ---- 9. Posting frequency anomalies ----
-    if (a.postsPerDay > 6) add(8, `Excessive posting frequency – spam/bot-like behavior`);
-    else if (a.postsPerDay > 3 && F < 50000) add(3, `High posting frequency`);
-    if (a.postsPerDay < 0.015 && F > 100000 && profile.postsCount > 20) add(5, `Dormant posting with large audience – audience decay risk`);
+    if (postsPerDay > 6) add(8, `Excessive posting frequency – spam/bot-like behavior`);
+    else if (postsPerDay > 3 && F < 50000) add(3, `High posting frequency`);
+    if (postsPerDay < 0.015 && F > 100000 && profile.postsCount > 20) add(5, `Dormant posting with large audience – audience decay risk`);
 
     // ---- 10. Profile completeness ----
     let completeness = 0;
@@ -368,8 +368,8 @@ function generateAnalysis(profile: InstagramProfile): ProfileAnalysis {
     const bio = (profile.biography || '').toLowerCase();
     const spamTerms = ['buy followers', 'dm for promo', 'follow me', 'follow back', 'f4f'];
     if (spamTerms.some(t => bio.includes(t)) && F > 5000) add(6, `Promotional / follow-bait bio detected`);
-    if (a.avgHashtagsPerPost > 25) add(4, `Hashtag stuffing detected`);
-    if (a.captionAvgLength < 5 && profile.postsCount > 10) add(3, `Very short / missing captions consistently`);
+    if (avgHashtagsPerPost > 25) add(4, `Hashtag stuffing detected`);
+    if (captionAvgLength < 5 && profile.postsCount > 10) add(3, `Very short / missing captions consistently`);
 
     // ---- 12. Account age vs followers ----
     if (age.days > 0 && age.days < 60 && F > 50000 && !profile.isVerified) add(18, `Very new account with large following – high risk`);
@@ -396,11 +396,11 @@ function generateAnalysis(profile: InstagramProfile): ProfileAnalysis {
 
     // ---- 16. Positive trust signals ----
     let trust = 0;
-    if (a.captionAvgLength >= 30) trust += 1;
-    if (a.avgHashtagsPerPost >= 3 && a.avgHashtagsPerPost <= 15) trust += 1;
+    if (captionAvgLength >= 30) trust += 1;
+    if (avgHashtagsPerPost >= 3 && avgHashtagsPerPost <= 15) trust += 1;
     if ((profile.externalUrl || '').length > 0) trust += 1;
     if (profile.isBusinessAccount && F > 10000) trust += 1;
-    if (a.postsPerWeek >= 2 && a.postsPerWeek <= 14) trust += 1;
+    if (postsPerWeek >= 2 && postsPerWeek <= 14) trust += 1;
     score = Math.max(0, score - trust * 1.5);
 
     // Clamp 0-100
