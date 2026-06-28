@@ -1,5 +1,3 @@
-import { execSync } from "child_process";
-
 export interface InstagramProfile {
   username: string;
   fullName: string;
@@ -544,20 +542,87 @@ function parseUser(user: any): { profile: InstagramProfile; analysis: ProfileAna
   return { profile, analysis: generateAnalysis(profile) };
 }
 
-function curlFetch(url: string, headers: Record<string, string>): string | null {
-  try {
-    const h = Object.entries(headers).map(([k, v]) => `-H "${k}: ${v}"`).join(" ");
-    return execSync(`curl -s -m 15 ${h} "${url}"`, { encoding: "utf-8", timeout: 20000, stdio: ["pipe", "pipe", "pipe"] });
-  } catch (e) { console.error("curl failed:", e); return null; }
+// === API FETCHER v3 – native fetch, cached, retry ===
+type CacheEntry = { at: number; data: { profile: InstagramProfile; analysis: ProfileAnalysis } };
+const __profileCache = new Map<string, CacheEntry>();
+const __pending = new Map<string, Promise<{ profile: InstagramProfile; analysis: ProfileAnalysis } | null>>();
+
+const UA_POOL = [
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+  "Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+];
+
+async function httpGet(url: string, timeoutMs = 8000): Promise<string | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "x-ig-app-id": "936619743392459",
+          "User-Agent": UA_POOL[Math.floor(Math.random() * UA_POOL.length)],
+          "Accept": "*/*",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Referer": "https://www.instagram.com/",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        signal: controller.signal,
+        cache: "no-store",
+      });
+      clearTimeout(timer);
+      if (!res.ok) continue;
+      const text = await res.text();
+      if (text && text.length > 50) return text;
+    } catch {}
+    clearTimeout(timer);
+    await new Promise(r => setTimeout(r, 250 + attempt * 400));
+  }
+  return null;
 }
 
 export async function fetchInstagramProfile(username: string): Promise<{ profile: InstagramProfile; analysis: ProfileAnalysis } | null> {
   const u = username.replace(/^@/, "").trim().toLowerCase();
-  const raw = curlFetch(`https://i.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(u)}`, {
-    "x-ig-app-id": "936619743392459",
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
-    "Accept": "*/*", "Accept-Language": "en-US,en;q=0.9",
-  });
-  if (raw) { try { const d = JSON.parse(raw); if (d?.data?.user) return parseUser(d.data.user); } catch { /* */ } }
-  return null;
+  if (!u) return null;
+
+  const cached = __profileCache.get(u);
+  if (cached && Date.now() - cached.at < 90_000) return cached.data;
+
+  const pending = __pending.get(u);
+  if (pending) return pending;
+
+  const p = (async () => {
+    try {
+      const endpoints = [
+        `https://i.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(u)}`,
+        `https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(u)}`,
+        `https://www.instagram.com/${encodeURIComponent(u)}/?__a=1&__d=dis`,
+      ];
+      for (const url of endpoints) {
+        const raw = await httpGet(url, 8000);
+        if (!raw) continue;
+        try {
+          const d = JSON.parse(raw);
+          const user = d?.data?.user || d?.graphql?.user || d?.user;
+          if (user) {
+            const result = parseUser(user);
+            if (result) {
+              __profileCache.set(u, { at: Date.now(), data: result });
+              if (__profileCache.size > 80) {
+                const first = __profileCache.keys().next().value;
+                if (first) __profileCache.delete(first);
+              }
+              return result;
+            }
+          }
+        } catch {}
+      }
+      return null;
+    } finally {
+      __pending.delete(u);
+    }
+  })();
+
+  __pending.set(u, p);
+  return p;
 }

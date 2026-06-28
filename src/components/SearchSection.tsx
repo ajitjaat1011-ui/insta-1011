@@ -54,7 +54,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
           {focused && (
             <motion.div className="absolute -inset-[3px] rounded-[24px]"
               style={{ background:"linear-gradient(135deg,rgba(168,85,247,0.4),rgba(236,72,153,0.4),rgba(249,115,22,0.35))",
-                filter:"blur(6px)" }}
+                 }}
               initial={{ opacity:0 }} animate={{ opacity:0.55 }} exit={{ opacity:0 }} />
           )}
         </AnimatePresence>

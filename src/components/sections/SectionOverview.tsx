@@ -98,7 +98,7 @@ export default function SectionOverview({
               </div>
               <motion.div className="absolute inset-0 rounded-full -z-10"
                 style={{ background:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",
-                  filter:"blur(14px)", opacity:0.25 }}
+                  opacity:0.25 }}
                 animate={{ opacity:[0.15,0.35,0.15], scale:[1,1.06,1] }}
                 transition={{ duration:3, repeat:Infinity }} />
             </div>

@@ -49,7 +49,7 @@ export default function SectionPosts({ profile }: { profile: InstagramProfile })
               background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.05)",
             }}>
               {post.imageUrl ? (
-                <img src={post.imageUrl} alt="" className="w-full h-full object-cover"
+                <img src={post.imageUrl} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover"
                   onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

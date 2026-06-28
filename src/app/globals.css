@@ -90,3 +90,19 @@
 ::selection { background: rgba(168,85,247,0.3); color: white; }
 html { scroll-behavior: smooth; }
 body { overflow-x: hidden; }
+
+/* === Performance: reduce motion / blur on low-end / mobile === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 640px) {
+  .liquid-glass, .liquid-glass-glow {
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+  }
+}
