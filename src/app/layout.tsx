@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { PWARegister } from "@/components/PWARegister";
-import { MotionConfig } from "framer-motion";
+import MotionProvider from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
   title: "Insta 1011 — Instagram Profile Analyzer",
@@ -39,9 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="apple-touch-icon" href="/icon-512.png" />
       </head>
       <body className="text-white antialiased min-h-screen" style={{ background: "#030305" }}>
-        <MotionConfig reducedMotion="always">
-          {children}
-        </MotionConfig>
+        <MotionProvider>{children}</MotionProvider>
         <PWARegister />
       </body>
     </html>

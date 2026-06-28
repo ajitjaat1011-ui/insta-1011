@@ -110,13 +110,13 @@ export default function SectionPosts({ profile }: { profile: InstagramProfile })
             )}
             {post.isVideo && (
               <div className="absolute top-1.5 right-1.5 rounded-full px-2 py-0.5 flex items-center gap-1"
-                style={{ background:"rgba(0,0,0,0.55)", backdropFilter:"blur(8px)" }}>
+                style={{ background:"rgba(0,0,0,0.55)", backdropFilter:"blur(2px)" }}>
                 <Play className="w-2.5 h-2.5 text-white fill-white" />
                 <span className="text-[9px] text-white font-medium">Reel</span>
               </div>
             )}
             <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
-              style={{ background:"rgba(0,0,0,0.6)", backdropFilter:"blur(4px)" }}>
+              style={{ background:"rgba(0,0,0,0.6)", backdropFilter:"blur(2px)" }}>
               <div className="flex items-center gap-1"><Heart className="w-3.5 h-3.5 text-white fill-white" /><span className="text-white font-bold text-xs">{fmt(post.likes)}</span></div>
               <div className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5 text-white fill-white" /><span className="text-white font-bold text-xs">{fmt(post.comments)}</span></div>
             </div>
