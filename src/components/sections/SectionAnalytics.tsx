@@ -30,17 +30,19 @@ function LineChart({ data, color, label }: { data: number[]; color: string; labe
   const line = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
   const area = `${line} L ${w} ${h} L 0 ${h} Z`;
   const len = pts.reduce((a, p, i) => i === 0 ? 0 : a + Math.hypot(p.x - pts[i - 1].x, p.y - pts[i - 1].y), 0);
+  // sanitize gradient id – spaces / % break in some browsers
+  const gid = `g-${label.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
   return (
-    <div>
+    <div className="min-w-0">
       <p className="text-white/20 text-[10px] uppercase tracking-wider mb-1.5">{label}</p>
-      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: h }}>
-        <defs><linearGradient id={`g-${label}`} x1="0" y1="0" x2="0" y2="1">
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full block" style={{ height: h }} preserveAspectRatio="none">
+        <defs><linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={color} stopOpacity={0.2} /><stop offset="100%" stopColor={color} stopOpacity={0} />
         </linearGradient></defs>
-        <motion.path d={area} fill={`url(#g-${label})`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} />
+        <motion.path d={area} fill={`url(#${gid})`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} />
         <motion.path d={line} fill="none" stroke={color} strokeWidth={2} strokeLinecap="round"
           strokeDasharray={len} initial={{ strokeDashoffset: len }} animate={{ strokeDashoffset: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }} style={{ filter: `drop-shadow(0 0 4px ${color}40)` }} />
+          transition={{ duration: 1.2, ease: "easeOut" }} />
         {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r={2.5} fill={color} stroke="#0a0a0f" strokeWidth={1.5} />)}
       </svg>
     </div>
@@ -51,14 +53,14 @@ function BarChart({ posts, fc }: { posts: { likes: number; comments: number }[];
   if (!posts.length) return null;
   const mx = Math.max(...posts.map(p => p.likes + p.comments), 1);
   return (
-    <div>
-      <p className="text-white/20 text-[10px] uppercase tracking-wider mb-2">Engagement Per Post</p>
-      <div className="flex items-end gap-[2px] h-28">
+    <div className="w-full overflow-hidden">
+      <p className="text-white/20 text-[10px] uppercase tracking-wider mb-3">Engagement Per Post</p>
+      <div className="flex items-end gap-[3px] h-28 w-full overflow-hidden">
         {posts.slice(0, 12).map((p, i) => {
           const h = (((p.likes + p.comments) / mx) * 100);
           const er = fc > 0 ? ((p.likes + p.comments) / fc * 100).toFixed(2) : "0";
           return (
-            <div key={i} className="flex-1 h-full flex items-end group relative">
+            <div key={i} className="flex-1 h-full flex items-end group relative min-w-0">
               <motion.div className="w-full rounded-t-sm" style={{ height: `${Math.max(h, 2)}%`, background: "linear-gradient(to top, #7c3aed, #ec4899)", opacity: 0.8 }}
                 initial={{ height: 0 }} animate={{ height: `${Math.max(h, 2)}%` }}
                 transition={{ delay: i * 0.04, duration: 0.6, ease: "easeOut" }}
@@ -90,34 +92,38 @@ export default function SectionAnalytics({ profile, analysis: a }: { profile: In
   ];
 
   return (
-    <div className="space-y-4">
-      {/* Metrics grid — no per-card motion for performance */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+    <div className="space-y-4" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
+      {/* Metrics grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {metrics.map((m) => (
-          <div key={m.l} className="liquid-glass-inner rounded-xl p-3.5 relative overflow-hidden">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${m.c}12` }}>
-                <m.icon className="w-3.5 h-3.5" style={{ color: m.c }} />
+          <div key={m.l} className="liquid-glass-inner rounded-xl p-3.5 relative overflow-hidden min-h-[104px] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${m.c}12` }}>
+                  <m.icon className="w-3.5 h-3.5" style={{ color: m.c }} />
+                </div>
+                <p className="text-white/25 text-[10px] uppercase tracking-wider leading-tight">{m.l}</p>
               </div>
-              <p className="text-white/25 text-[10px] uppercase tracking-wider">{m.l}</p>
+              <p className="text-white font-bold text-base leading-tight break-all">{m.v}</p>
             </div>
-            <p className="text-white font-bold text-base">{m.v}</p>
-            <Bar value={m.bv} max={m.bm} color={m.c} />
-            <p className="text-white/18 text-[10px] mt-1">{m.s}</p>
+            <div>
+              <Bar value={m.bv} max={m.bm} color={m.c} />
+              <p className="text-white/30 text-[10px] mt-1.5 truncate">{m.s}</p>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Charts */}
-      <div className="liquid-glass rounded-3xl p-5">
+      {/* Charts – use liquid-glass-inner (no backdrop-filter) to avoid nested blur glitch with ResultsView filter:blur */}
+      <div className="liquid-glass-inner rounded-3xl p-5 overflow-hidden" style={{ isolation: "isolate" }}>
         <div className="flex items-center gap-2 mb-4">
-          <BarChart3 className="w-4 h-4 text-purple-400" />
+          <BarChart3 className="w-4 h-4 text-purple-400 flex-shrink-0" />
           <h3 className="text-sm font-bold text-white">Performance</h3>
           <span className="text-white/15 text-[10px] ml-auto">{a.trendDirection} trend</span>
         </div>
         <BarChart posts={profile.recentPosts} fc={profile.followersCount} />
         {profile.recentPosts.length > 2 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.03)" }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-4 mt-6 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             <LineChart data={a.likesTrend} color="#ec4899" label="Likes" />
             <LineChart data={a.commentsTrend} color="#3b82f6" label="Comments" />
             <LineChart data={a.engagementTrend} color="#a855f7" label="ER %" />
@@ -125,28 +131,28 @@ export default function SectionAnalytics({ profile, analysis: a }: { profile: In
         )}
       </div>
 
-      {/* Content + extras */}
-      <div className="grid grid-cols-2 gap-2">
-        <div className="liquid-glass-inner rounded-xl p-4">
-          <div className="flex items-center gap-1.5 mb-3"><Target className="w-3.5 h-3.5 text-pink-400" /><span className="text-xs font-semibold text-white">Content</span></div>
-          <div className="space-y-2 text-[11px]">
-            <div className="flex justify-between"><span className="text-white/30">Photos</span><span className="text-white/60 font-medium">{a.contentType.photos}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Videos/Reels</span><span className="text-white/60 font-medium">{a.contentType.videos} ({a.contentType.videoPercent}%)</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Avg Caption</span><span className="text-white/60 font-medium">{a.captionAvgLength} chars</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Avg Hashtags</span><span className="text-white/60 font-medium">{a.avgHashtagsPerPost}/post</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Emoji Posts</span><span className="text-white/60 font-medium">{a.emojiUsage}/{profile.recentPosts.length}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Mentions</span><span className="text-white/60 font-medium">{a.mentionUsage}/{profile.recentPosts.length}</span></div>
+      {/* Content + extras – stack on mobile to prevent cramped overflow */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="liquid-glass-inner rounded-xl p-4 overflow-hidden">
+          <div className="flex items-center gap-1.5 mb-3"><Target className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" /><span className="text-xs font-semibold text-white">Content</span></div>
+          <div className="space-y-2.5 text-[11px]">
+            <div className="flex justify-between gap-3"><span className="text-white/30">Photos</span><span className="text-white/60 font-medium">{a.contentType.photos}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Videos/Reels</span><span className="text-white/60 font-medium">{a.contentType.videos} ({a.contentType.videoPercent}%)</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Avg Caption</span><span className="text-white/60 font-medium">{a.captionAvgLength} chars</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Avg Hashtags</span><span className="text-white/60 font-medium">{a.avgHashtagsPerPost}/post</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Emoji Posts</span><span className="text-white/60 font-medium">{a.emojiUsage}/{profile.recentPosts.length}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Mentions</span><span className="text-white/60 font-medium">{a.mentionUsage}/{profile.recentPosts.length}</span></div>
           </div>
         </div>
-        <div className="liquid-glass-inner rounded-xl p-4">
-          <div className="flex items-center gap-1.5 mb-3"><Activity className="w-3.5 h-3.5 text-emerald-400" /><span className="text-xs font-semibold text-white">Performance</span></div>
-          <div className="space-y-2 text-[11px]">
-            <div className="flex justify-between"><span className="text-white/30">Best Post</span><span className="text-white/60 font-medium">{a.bestPost ? fmt(a.bestPost.likes + a.bestPost.comments) : "-"}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Worst Post</span><span className="text-white/60 font-medium">{a.worstPost ? fmt(a.worstPost.likes + a.worstPost.comments) : "-"}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Viral Posts</span><span className="text-white/60 font-medium">{a.viralPostCount} (&gt;2x avg)</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Consistency</span><span className="text-white/60 font-medium">{a.engagementConsistency}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Followers/Post</span><span className="text-white/60 font-medium">{fmt(a.followersPerPost)}</span></div>
-            <div className="flex justify-between"><span className="text-white/30">Follow-back</span><span className="text-white/60 font-medium">{a.followBackRate}%</span></div>
+        <div className="liquid-glass-inner rounded-xl p-4 overflow-hidden">
+          <div className="flex items-center gap-1.5 mb-3"><Activity className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" /><span className="text-xs font-semibold text-white">Performance</span></div>
+          <div className="space-y-2.5 text-[11px]">
+            <div className="flex justify-between gap-3"><span className="text-white/30">Best Post</span><span className="text-white/60 font-medium">{a.bestPost ? fmt(a.bestPost.likes + a.bestPost.comments) : "-"}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Worst Post</span><span className="text-white/60 font-medium">{a.worstPost ? fmt(a.worstPost.likes + a.worstPost.comments) : "-"}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Viral Posts</span><span className="text-white/60 font-medium">{a.viralPostCount} (&gt;2x avg)</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Consistency</span><span className="text-white/60 font-medium">{a.engagementConsistency}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Followers/Post</span><span className="text-white/60 font-medium">{fmt(a.followersPerPost)}</span></div>
+            <div className="flex justify-between gap-3"><span className="text-white/30">Follow-back</span><span className="text-white/60 font-medium">{a.followBackRate}%</span></div>
           </div>
         </div>
       </div>
