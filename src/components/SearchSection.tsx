@@ -58,22 +58,22 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
               initial={{ opacity:0 }} animate={{ opacity:0.55 }} exit={{ opacity:0 }} />
           )}
         </AnimatePresence>
-        <div className="liquid-glass rounded-[20px] flex items-center gap-3 px-5 py-3 relative z-10">
-          <span className="text-base font-bold" style={{ background:"linear-gradient(135deg,#a855f7,#ec4899)",
+        <div className="liquid-glass rounded-[20px] flex items-center gap-2 sm:gap-3 pl-4 pr-2 sm:px-5 py-2.5 sm:py-3 relative z-10">
+          <span className="text-base font-bold flex-shrink-0" style={{ background:"linear-gradient(135deg,#a855f7,#ec4899)",
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>@</span>
           <input type="text" value={username}
             onChange={e=>setUsername(e.target.value.replace(/\s/g,""))}
             onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)}
             placeholder="Enter any Instagram username..."
-            className="flex-1 bg-transparent text-white text-[15px] outline-none placeholder:text-white/20"
+            className="flex-1 min-w-0 bg-transparent text-white text-sm sm:text-[15px] outline-none placeholder:text-white/20"
             disabled={isLoading} autoComplete="off" spellCheck={false} autoCapitalize="off" />
           <motion.button type="submit" disabled={isLoading||!username.trim()}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl text-white font-semibold text-sm disabled:opacity-25"
+            className="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2 rounded-xl text-white font-semibold text-sm disabled:opacity-25 flex-shrink-0"
             style={{ background:"linear-gradient(135deg,#7c3aed,#db2777)",
               boxShadow:"0 4px 18px rgba(124,58,237,0.35)" }}
             whileHover={{ scale:1.05 }} whileTap={{ scale:0.93 }}>
             {isLoading?<Loader2 className="w-4 h-4 animate-spin"/>:<Search className="w-4 h-4"/>}
-            <span>{isLoading?"Analyzing":"Analyze"}</span>
+            <span className="hidden xs:inline sm:inline">{isLoading?"Analyzing":"Analyze"}</span>
           </motion.button>
         </div>
       </motion.form>
