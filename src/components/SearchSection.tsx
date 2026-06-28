@@ -2,10 +2,12 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Loader2, Sparkles } from "lucide-react";
+import { useWorldCup } from "./worldcup/WorldCupProvider";
 
 export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:string)=>void; isLoading:boolean }) {
   const [username, setUsername] = useState("");
   const [focused, setFocused] = useState(false);
+  const wc = (() => { try { return useWorldCup(); } catch { return { isActive: false }; } })();
 
   const submit = useCallback((e:React.FormEvent)=>{
     e.preventDefault();
@@ -24,7 +26,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
         transition={{ type:"spring", stiffness:140, damping:12 }}>
         <motion.div className="w-14 h-14 rounded-[16px] relative overflow-hidden mb-3 cursor-pointer"
           style={{
-            background:"linear-gradient(135deg,#833ab4,#fd1d1d 50%,#fcb045)",
+            background:"linear-gradient(135deg,var(--accent-1, #833ab4),var(--accent-2, #fd1d1d) 50%,var(--text-orange, #fcb045))",
             boxShadow:"0 0 35px rgba(131,58,180,0.3),0 6px 24px rgba(0,0,0,0.4)",
           }}
           whileHover={{ scale:1.1, rotate:5 }} whileTap={{ scale:0.92 }}>
@@ -34,16 +36,16 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
               animate={{ y:["-120%","120%"] }}
               transition={{ duration:3.5, repeat:Infinity, ease:"linear" }} />
             <span className="text-sm font-black text-white relative z-10"
-              style={{ textShadow:"0 0 12px rgba(168,85,247,0.5)" }}>1011</span>
+              style={{ textShadow:"0 0 12px rgba(var(--text-purple-rgb),0.5)" }}>1011</span>
           </div>
         </motion.div>
         <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-          <span style={{ background:"linear-gradient(135deg,#a855f7,#ec4899,#f97316)",
+          <span style={{ background:"linear-gradient(135deg, var(--text-purple), var(--text-pink), var(--text-orange, var(--text-orange, #f97316)))",
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Insta</span>
           {" "}<span className="text-white">1011</span>
         </h1>
         <p className="text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color:"rgba(255,255,255,0.22)" }}>
-          Real Profile Intelligence
+          {wc.isActive ? "FIFA WORLD CUP 2026 • REAL PROFILE INTELLIGENCE" : "Real Profile Intelligence"}
         </p>
       </motion.div>
 
@@ -53,27 +55,27 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
         <AnimatePresence>
           {focused && (
             <motion.div className="absolute -inset-[3px] rounded-[24px]"
-              style={{ background:"linear-gradient(135deg,rgba(168,85,247,0.4),rgba(236,72,153,0.4),rgba(249,115,22,0.35))", filter:"blur(8px)" ,
+              style={{ background:"linear-gradient(135deg,rgba(var(--text-purple-rgb),0.4),rgba(var(--text-pink-rgb),0.4),rgba(var(--text-orange-rgb),0.35))", filter:"blur(8px)" ,
                  }}
               initial={{ opacity:0 }} animate={{ opacity:0.55 }} exit={{ opacity:0 }} />
           )}
         </AnimatePresence>
         <div className="liquid-glass rounded-[20px] flex items-center gap-2 sm:gap-3 pl-4 pr-2 sm:px-5 py-2.5 sm:py-3 relative z-10">
-          <span className="text-base font-bold flex-shrink-0" style={{ background:"linear-gradient(135deg,#a855f7,#ec4899)",
+          <span className="text-base font-bold flex-shrink-0" style={{ background:"linear-gradient(135deg, var(--text-purple), var(--text-pink))",
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>@</span>
           <input type="text" value={username}
             onChange={e=>setUsername(e.target.value.replace(/\s/g,""))}
             onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)}
-            placeholder="Enter any Instagram username..."
+            placeholder={wc.isActive ? "Enter any Instagram username • Vamos Argentina 🇦🇷" : "Enter any Instagram username..."}
             className="flex-1 min-w-0 bg-transparent text-white text-sm sm:text-[15px] outline-none placeholder:text-white/20"
             disabled={isLoading} autoComplete="off" spellCheck={false} autoCapitalize="off" />
           <motion.button type="submit" disabled={isLoading||!username.trim()}
             className="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2 rounded-xl text-white font-semibold text-sm disabled:opacity-25 flex-shrink-0"
-            style={{ background:"linear-gradient(135deg,#7c3aed,#db2777)",
-              boxShadow:"0 4px 18px rgba(124,58,237,0.35)" }}
+            style={{ background:"var(--accent-grad)",
+              boxShadow:"0 4px 18px rgba(var(--accent-1-rgb),0.35)" }}
             whileHover={{ scale:1.05 }} whileTap={{ scale:0.93 }}>
             {isLoading?<Loader2 className="w-4 h-4 animate-spin"/>:<Search className="w-4 h-4"/>}
-            <span className="hidden xs:inline sm:inline">{isLoading?"Analyzing":"Analyze"}</span>
+            <span className="hidden xs:inline sm:inline">{isLoading ? (wc.isActive ? "Analyzing ⚽" : "Analyzing") : (wc.isActive ? "Analyze ⚽" : "Analyze")}</span>
           </motion.button>
         </div>
       </motion.form>

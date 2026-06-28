@@ -58,9 +58,9 @@ export default function InstallPrompt() {
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
         <div className="liquid-glass rounded-2xl p-4 flex items-center gap-3"
-          style={{ boxShadow: "0 -4px 30px rgba(0,0,0,0.4), 0 0 40px rgba(168,85,247,0.08)" }}>
+          style={{ boxShadow: "0 -4px 30px rgba(0,0,0,0.4), 0 0 40px rgba(var(--text-purple-rgb),0.08)" }}>
           <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)" }}>
+            style={{ background: "linear-gradient(135deg, var(--accent-1, #833ab4), var(--accent-2, #fd1d1d), var(--text-orange, #fcb045))" }}>
             <Smartphone className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
@@ -69,7 +69,7 @@ export default function InstallPrompt() {
           </div>
           <motion.button onClick={handleInstall}
             className="px-4 py-2 rounded-xl text-white font-semibold text-xs flex-shrink-0 flex items-center gap-1.5"
-            style={{ background: "linear-gradient(135deg, #7c3aed, #db2777)", boxShadow: "0 2px 12px rgba(124,58,237,0.3)" }}
+            style={{ background: "linear-gradient(135deg, var(--accent-1, #7c3aed), var(--accent-2, #db2777))", boxShadow: "0 2px 12px rgba(var(--accent-1-rgb),0.3)" }}
             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Download className="w-3.5 h-3.5" />
             Install

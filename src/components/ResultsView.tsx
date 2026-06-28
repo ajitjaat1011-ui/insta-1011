@@ -8,6 +8,7 @@ import SectionAnalytics from "./sections/SectionAnalytics";
 import SectionPosts from "./sections/SectionPosts";
 import SectionAuthenticity from "./sections/SectionAuthenticity";
 import FollowGateModal, { hasFollowed } from "./FollowGateModal";
+import { useWorldCup } from "./worldcup/WorldCupProvider";
 import { generateProfilePDF } from "@/lib/generatePDF";
 
 const tabs = [
@@ -25,6 +26,7 @@ export default function ResultsView({
   profile: InstagramProfile;
   analysis: ProfileAnalysis;
 }) {
+  const wc = (() => { try { return useWorldCup(); } catch { return { isActive: false }; } })();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showFollowModal, setShowFollowModal] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
@@ -49,9 +51,9 @@ export default function ResultsView({
       <motion.div className="flex items-center gap-4 pt-2 mb-4"
         initial={{ opacity:0, scaleX:0 }} animate={{ opacity:1, scaleX:1 }}
         transition={{ delay:0.1, duration:0.5 }}>
-        <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,transparent,rgba(168,85,247,0.25))" }} />
-        <span className="text-[10px] uppercase tracking-[0.3em]" style={{ color:"rgba(255,255,255,0.18)" }}>Analysis Results</span>
-        <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,rgba(168,85,247,0.25),transparent)" }} />
+        <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,transparent,rgba(var(--text-purple-rgb),0.25))" }} />
+        <span className="text-[10px] uppercase tracking-[0.3em]" style={{ color:"rgba(255,255,255,0.18)" }}>{wc.isActive ? "Analysis Results • WC26 🇦🇷" : "Analysis Results"}</span>
+        <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,rgba(var(--text-purple-rgb),0.25),transparent)" }} />
       </motion.div>
 
       {/* Download Banner */}
@@ -59,7 +61,7 @@ export default function ResultsView({
         initial={{ opacity:0, y:15 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.08 }}>
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background:"rgba(168,85,247,0.12)" }}>
+            style={{ background:"rgba(var(--text-purple-rgb),0.12)" }}>
             <FileText className="w-5 h-5 text-purple-400" />
           </div>
           <div className="min-w-0">
@@ -72,8 +74,8 @@ export default function ResultsView({
         <motion.button onClick={handleDownloadClick}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-semibold text-sm flex-shrink-0"
           style={{
-            background: isFollowed ? "linear-gradient(135deg, #16a34a, #22c55e)" : "linear-gradient(135deg, #7c3aed, #db2777)",
-            boxShadow: isFollowed ? "0 4px 15px rgba(34,197,94,0.3)" : "0 4px 15px rgba(124,58,237,0.3)",
+            background: isFollowed ? "linear-gradient(135deg, #16a34a, #22c55e)" : "var(--accent-grad, linear-gradient(135deg, var(--accent-1, #7c3aed), var(--accent-2, #db2777)))",
+            boxShadow: isFollowed ? "0 4px 15px rgba(34,197,94,0.3)" : "0 4px 15px rgba(var(--accent-1-rgb),0.3)",
           }}
           whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Download className="w-4 h-4" />
@@ -94,8 +96,8 @@ export default function ResultsView({
             <span className="hidden sm:inline">{tab.label}</span>
             {activeTab === tab.id && (
               <motion.div className="absolute inset-0 rounded-xl"
-                style={{ background:"linear-gradient(135deg, rgba(168,85,247,0.08), rgba(236,72,153,0.06))",
-                  border:"1px solid rgba(168,85,247,0.15)" }}
+                style={{ background:"linear-gradient(135deg, rgba(var(--text-purple-rgb),0.08), rgba(var(--text-pink-rgb),0.06))",
+                  border:"1px solid rgba(var(--text-purple-rgb),0.15)" }}
                 layoutId="activeTabBg"
                 transition={{ type:"spring", stiffness:400, damping:30 }} />
             )}

@@ -4,8 +4,60 @@
   --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ═══════ LIQUID GLASS — PERFORMANCE OPTIMIZED ═══════ */
+/* ===== Theme Variables – Insta 1011 default / World Cup 2026 ===== */
+:root {
+  /* Brand – Insta 1011 purple/pink */
+  --accent-1: #7c3aed;
+  --accent-2: #db2777;
+  --accent-grad: linear-gradient(135deg, #7c3aed, #db2777);
+  --accent-grad-rainbow: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  --accent-glow: rgba(124,58,237,0.35);
+  --text-purple: #a855f7;
+  --text-pink: #ec4899;
+  --accent-1-rgb: 124,58,237;
+  --accent-2-rgb: 219,39,119;
+  --text-purple-rgb: 168,85,247;
+  --text-pink-rgb: 236,72,153;
+  --text-orange-rgb: 249,115,22;
+  --text-orange: #f97316;
+  --glass-tint: 168,85,247;
+  /* charts */
+  --chart-1: #a855f7;
+  --chart-2: #ec4899;
+  --chart-3: #3b82f6;
+  --chart-4: #22c55e;
+  --chart-5: #f59e0b;
+  --chart-6: #f97316;
+}
 
+/* FIFA World Cup 2026 – Argentina Edition – auto-expires 2026-06-29 00:00 IST */
+[data-wc="2026"] {
+  /* Argentina Albiceleste */
+  --accent-1: #74acdf;
+  --accent-2: #ffffff;
+  --accent-gold: #fcbf49;
+  --accent-grad: linear-gradient(135deg, #74acdf, #ffffff, #fcbf49);
+  --accent-grad-rainbow: linear-gradient(135deg, #74acdf, #ffffff, #fcbf49);
+  --accent-glow: rgba(116,172,223,0.35);
+  --text-purple: #74acdf;
+  --text-pink: #fcbf49;
+  --accent-1-rgb: 116,172,223;
+  --accent-2-rgb: 255,255,255;
+  --text-purple-rgb: 116,172,223;
+  --text-pink-rgb: 252,191,73;
+  --text-orange-rgb: 252,191,73;
+  --text-orange: #fcbf49;
+  --glass-tint: 116,172,223;
+  /* charts – Argentina themed */
+  --chart-1: #74acdf;
+  --chart-2: #fcbf49;
+  --chart-3: #ffffff;
+  --chart-4: #2a9d8f;
+  --chart-5: #e9c46a;
+  --chart-6: #457b9d;
+}
+
+/* ===== LIQUID GLASS — PERFORMANCE OPTIMIZED ===== */
 @keyframes glass-shine {
   0%   { transform: translateX(-150%) rotate(-45deg); }
   100% { transform: translateX(250%) rotate(-45deg); }
@@ -26,18 +78,14 @@
     inset 0 -0.5px 0 rgba(255,255,255,0.03);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
-
-/* Shine on hover only */
 .liquid-glass::after {
-  content: '';
-  position: absolute; top: 0; left: 0;
+  content: ''; position: absolute; top: 0; left: 0;
   width: 50%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
   transform: translateX(-150%) rotate(-45deg);
   pointer-events: none; z-index: 2; border-radius: inherit;
 }
 .liquid-glass:hover::after { animation: glass-shine 1s ease-out forwards; }
-
 .liquid-glass:hover {
   border-color: rgba(255,255,255,0.15);
   box-shadow: 0 12px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.16);
@@ -56,18 +104,18 @@
   box-shadow: 0 6px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
-/* Glow variant */
+/* Glow variant – uses theme vars */
 .liquid-glass-glow {
-  background: linear-gradient(135deg, rgba(168,85,247,0.05) 0%, rgba(255,255,255,0.02) 50%, rgba(59,130,246,0.03) 100%);
+  background: linear-gradient(135deg, rgba(var(--glass-tint),0.05) 0%, rgba(255,255,255,0.02) 50%, rgba(59,130,246,0.03) 100%);
   backdrop-filter: blur(32px) saturate(160%);
   -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border: 1px solid rgba(168,85,247,0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 40px rgba(168,85,247,0.04), inset 0 1px 0 rgba(255,255,255,0.1);
+  border: 1px solid rgba(var(--glass-tint),0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 40px rgba(var(--glass-tint),0.04), inset 0 1px 0 rgba(255,255,255,0.1);
   transition: all 0.4s ease;
 }
 .liquid-glass-glow:hover {
-  border-color: rgba(168,85,247,0.18);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 0 60px rgba(168,85,247,0.06), inset 0 1px 0 rgba(255,255,255,0.14);
+  border-color: rgba(var(--glass-tint),0.18);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 0 60px rgba(var(--glass-tint),0.06), inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
 /* Tabs */
@@ -80,14 +128,23 @@
 .glass-tab-active {
   background: rgba(255,255,255,0.09);
   border-color: rgba(255,255,255,0.16);
-  box-shadow: 0 2px 12px rgba(168,85,247,0.1);
+  box-shadow: 0 2px 12px rgba(var(--glass-tint),0.1);
 }
+
+/* Themed utilities – use CSS vars so World Cup skin auto-recolors */
+.btn-accent {
+  background: var(--accent-grad);
+  box-shadow: 0 4px 18px var(--accent-glow);
+  color: white;
+}
+.text-accent { color: var(--text-purple); }
+.text-accent-2 { color: var(--text-pink); }
 
 /* Utils */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
-::selection { background: rgba(168,85,247,0.3); color: white; }
+::selection { background: rgba(var(--glass-tint),0.3); color: white; }
 html { scroll-behavior: smooth; }
 body { overflow-x: hidden; }
 
@@ -105,4 +162,78 @@ body { overflow-x: hidden; }
     backdrop-filter: blur(20px) saturate(130%);
     -webkit-backdrop-filter: blur(20px) saturate(130%);
   }
+}
+
+/* ===== FIFA WORLD CUP 2026 – ARGENTINA SKIN ===== */
+[data-wc="2026"] body {
+  background: radial-gradient(ellipse at 50% -10%, rgba(116,172,223,0.06), transparent 55%), #030305 !important;
+}
+[data-wc="2026"] .liquid-glass,
+[data-wc="2026"] .liquid-glass-inner {
+  border-color: rgba(116,172,223,0.12) !important;
+}
+[data-wc="2026"] ::selection { background: rgba(116,172,223,0.35); color: white; }
+
+/* World Cup animations */
+@keyframes wc-float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(180deg); }
+}
+@keyframes wc-drift {
+  0% { transform: translateX(-10vw) translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateX(110vw) translateY(-20px) rotate(360deg); opacity: 0; }
+}
+@keyframes wc-confetti {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+@keyframes wc-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.wc-football {
+  position: fixed; pointer-events: none; z-index: 5;
+  font-size: 22px; opacity: 0.55;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  animation: wc-drift linear infinite;
+  will-change: transform, opacity;
+}
+.wc-confetti {
+  position: fixed; pointer-events: none; z-index: 4;
+  width: 6px; height: 10px; border-radius: 1px;
+  animation: wc-confetti linear infinite;
+  will-change: transform, opacity;
+}
+.wc-stadium-vignette {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(116,172,223,0.045), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 15% 100%, rgba(252,191,73,0.025), transparent 50%),
+    radial-gradient(ellipse 70% 40% at 85% 100%, rgba(116,172,223,0.025), transparent 50%);
+}
+.wc-pitch-line {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 36px; pointer-events: none; z-index: 2;
+  opacity: 0.12;
+  background: repeating-linear-gradient(90deg,
+    rgba(34,139,34,0.15) 0px, rgba(34,139,34,0.15) 40px,
+    rgba(255,255,255,0.06) 40px, rgba(255,255,255,0.06) 42px
+  );
+}
+.wc-top-banner {
+  position: relative; z-index: 30;
+  background: linear-gradient(90deg, #74acdf, #ffffff, #74acdf, #fcbf49, #74acdf);
+  background-size: 200% 100%;
+  animation: wc-shimmer 6s linear infinite;
+  color: #0b1f3a; font-weight: 800; font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-align: center; padding: 7px 12px;
+}
+.wc-top-banner span { text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-football, .wc-confetti, .wc-top-banner { animation: none !important; opacity: 0.3 !important; }
 }

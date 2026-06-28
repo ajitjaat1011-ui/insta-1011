@@ -23,12 +23,12 @@ function ScoreRing({ score, size = 130 }: { score: number; size?: number }) {
           initial={{ strokeDashoffset: c }}
           animate={{ strokeDashoffset: off }}
           transition={{ duration: 1.6, ease: [0.22,1,0.36,1], delay: 0.4 }}
-          style={{ filter: "drop-shadow(0 0 12px rgba(168,85,247,0.4))" }} />
+          style={{ filter: "drop-shadow(0 0 12px rgba(var(--text-purple-rgb),0.4))" }} />
         <defs>
           <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#a855f7" />
-            <stop offset="50%" stopColor="#ec4899" />
-            <stop offset="100%" stopColor="#f97316" />
+            <stop offset="0%" stopColor="var(--text-purple, #a855f7)" />
+            <stop offset="50%" stopColor="var(--text-pink, #ec4899)" />
+            <stop offset="100%" stopColor="var(--text-orange, #f97316)" />
           </linearGradient>
         </defs>
       </svg>
@@ -54,7 +54,7 @@ export default function SectionOverview({
   onNavigate: (tab: TabId) => void;
 }) {
   const badges = [
-    { icon: Star, label: "Quality", value: analysis.accountQuality, color: "#a855f7" },
+    { icon: Star, label: "Quality", value: analysis.accountQuality, color: "var(--text-purple, #a855f7)" },
     { icon: Zap, label: "Growth", value: analysis.growthPotential, color: "#f59e0b" },
     { icon: Eye, label: "Reach", value: analysis.audienceReach, color: "#22c55e" },
     { icon: TrendingUp, label: "Tier", value: analysis.influencerTier, color: "#3b82f6" },
@@ -68,7 +68,7 @@ export default function SectionOverview({
         transition={{ duration:0.6 }}>
         {/* Top shimmer line */}
         <motion.div className="absolute top-0 left-0 right-0 h-[1px] z-10"
-          style={{ background:"linear-gradient(90deg,transparent,rgba(168,85,247,0.4),transparent)",
+          style={{ background:"linear-gradient(90deg,transparent,rgba(var(--text-purple-rgb),0.4),transparent)",
             backgroundSize:"200% 100%" }}
           animate={{ backgroundPosition:["-200% 0","200% 0"] }}
           transition={{ duration:3.5, repeat:Infinity, ease:"linear" }} />
@@ -79,7 +79,7 @@ export default function SectionOverview({
             initial={{ scale:0, rotate:-30 }} animate={{ scale:1, rotate:0 }}
             transition={{ type:"spring", stiffness:140, damping:12, delay:0.15 }}>
             <div className="w-28 h-28 rounded-full p-[3px] relative" style={{
-              background:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",
+              background:"linear-gradient(135deg,var(--accent-1, #833ab4),var(--accent-2, #fd1d1d),var(--text-orange, #fcb045))",
             }}>
               <div className="w-full h-full rounded-full bg-black p-[3px]">
                 {profile.profilePicUrl ? (
@@ -87,17 +87,17 @@ export default function SectionOverview({
                     className="w-full h-full rounded-full object-cover"
                     onError={e=>{
                       const el=e.target as HTMLImageElement; el.style.display="none";
-                      el.parentElement!.innerHTML=`<div class="w-full h-full rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#7c3aed,#db2777)"><span class="text-3xl font-black text-white">${profile.username[0]?.toUpperCase()||"?"}</span></div>`;
+                      el.parentElement!.innerHTML=`<div class="w-full h-full rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,var(--accent-1, #7c3aed),var(--accent-2, #db2777))"><span class="text-3xl font-black text-white">${profile.username[0]?.toUpperCase()||"?"}</span></div>`;
                     }} />
                 ) : (
                   <div className="w-full h-full rounded-full flex items-center justify-center"
-                    style={{ background:"linear-gradient(135deg,#7c3aed,#db2777)" }}>
+                    style={{ background:"linear-gradient(135deg,var(--accent-1, #7c3aed),var(--accent-2, #db2777))" }}>
                     <span className="text-3xl font-black text-white">{profile.username[0]?.toUpperCase()||"?"}</span>
                   </div>
                 )}
               </div>
               <motion.div className="absolute inset-0 rounded-full -z-10"
-                style={{ background:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",
+                style={{ background:"linear-gradient(135deg,var(--accent-1, #833ab4),var(--accent-2, #fd1d1d),var(--text-orange, #fcb045))",
                   opacity:0.25 }}
                 animate={{ opacity:[0.15,0.35,0.15], scale:[1,1.06,1] }}
                 transition={{ duration:3, repeat:Infinity }} />
@@ -128,7 +128,7 @@ export default function SectionOverview({
             {profile.fullName && <p className="text-white/45 text-base mt-0.5">{profile.fullName}</p>}
             {profile.category && (
               <span className="inline-block px-3 py-0.5 rounded-full text-[11px] font-medium mt-1.5"
-                style={{ background:"rgba(168,85,247,0.1)", color:"#c084fc", border:"1px solid rgba(168,85,247,0.15)" }}>
+                style={{ background:"rgba(var(--text-purple-rgb),0.1)", color:"#c084fc", border:"1px solid rgba(var(--text-purple-rgb),0.15)" }}>
                 {profile.category}
               </span>
             )}
@@ -211,7 +211,7 @@ export default function SectionOverview({
           </div>
           <div className="h-1.5 rounded-full overflow-hidden" style={{ background:"rgba(255,255,255,0.04)" }}>
             <motion.div className="h-full rounded-full"
-              style={{ background:"linear-gradient(90deg,#7c3aed,#ec4899)" }}
+              style={{ background:"linear-gradient(90deg,var(--accent-1, #7c3aed),var(--text-pink, #ec4899))" }}
               initial={{ width:0 }}
               animate={{ width:`${Math.min((analysis.accountAgeDays / (365*15))*100, 100)}%` }}
               transition={{ duration:1.2, delay:0.5, ease:"easeOut" }} />
@@ -226,7 +226,7 @@ export default function SectionOverview({
       {/* Quick action cards */}
       <div className="grid grid-cols-2 gap-2.5">
         {[
-          { label:"View Analytics", sub:"Engagement, trends & charts", tab:"analytics" as TabId, color:"#a855f7" },
+          { label:"View Analytics", sub:"Engagement, trends & charts", tab:"analytics" as TabId, color:"var(--text-purple, #a855f7)" },
           { label:"View Authenticity", sub:"Bot detection & fake analysis", tab:"authenticity" as TabId, color:"#22c55e" },
         ].map((card,i)=>(
           <motion.button key={card.tab}

@@ -61,7 +61,7 @@ function BarChart({ posts, fc }: { posts: { likes: number; comments: number }[];
           const er = fc > 0 ? ((p.likes + p.comments) / fc * 100).toFixed(2) : "0";
           return (
             <div key={i} className="flex-1 h-full flex items-end group relative min-w-0">
-              <motion.div className="w-full rounded-t-sm" style={{ height: `${Math.max(h, 2)}%`, background: "linear-gradient(to top, #7c3aed, #ec4899)" }}
+              <motion.div className="w-full rounded-t-sm" style={{ height: `${Math.max(h, 2)}%`, background: "linear-gradient(to top, var(--accent-1, #7c3aed), var(--text-pink, #ec4899))" }}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ delay: i * 0.015, duration: 0.3 }}
                 whileHover={{ opacity: 1 }} />
@@ -81,12 +81,12 @@ function BarChart({ posts, fc }: { posts: { likes: number; comments: number }[];
 
 export default function SectionAnalytics({ profile, analysis: a }: { profile: InstagramProfile; analysis: ProfileAnalysis }) {
   const metrics = [
-    { icon: TrendingUp, l: "Engagement Rate", v: `${a.engagementRate}%`, s: a.engagementRate > 3 ? "Excellent" : a.engagementRate > 1 ? "Good" : "Low", c: "#a855f7", bv: a.engagementRate, bm: 10 },
-    { icon: Heart, l: "Avg Likes", v: fmt(a.avgLikes), s: `Median: ${fmt(a.medianLikes)}`, c: "#ec4899", bv: Math.min(a.avgLikes, 500000), bm: 500000 },
+    { icon: TrendingUp, l: "Engagement Rate", v: `${a.engagementRate}%`, s: a.engagementRate > 3 ? "Excellent" : a.engagementRate > 1 ? "Good" : "Low", c: "var(--text-purple, #a855f7)", bv: a.engagementRate, bm: 10 },
+    { icon: Heart, l: "Avg Likes", v: fmt(a.avgLikes), s: `Median: ${fmt(a.medianLikes)}`, c: "var(--text-pink, #ec4899)", bv: Math.min(a.avgLikes, 500000), bm: 500000 },
     { icon: MessageCircle, l: "Avg Comments", v: fmt(a.avgComments), s: `Median: ${fmt(a.medianComments)}`, c: "#3b82f6", bv: Math.min(a.avgComments, 50000), bm: 50000 },
     { icon: Users, l: "Follower Ratio", v: `${fmt(a.followerToFollowingRatio)}:1`, s: a.influencerTier, c: "#22c55e", bv: Math.min(a.followerToFollowingRatio, 1000), bm: 1000 },
     { icon: Activity, l: "Post Frequency", v: `${a.postsPerWeek}/wk`, s: a.postFrequency, c: "#f59e0b", bv: a.postsPerWeek, bm: 14 },
-    { icon: Percent, l: "Like/Comment", v: `${a.likesToCommentsRatio}:1`, s: a.engagementConsistency, c: "#f97316", bv: Math.min(a.likesToCommentsRatio, 200), bm: 200 },
+    { icon: Percent, l: "Like/Comment", v: `${a.likesToCommentsRatio}:1`, s: a.engagementConsistency, c: "var(--text-orange, #f97316)", bv: Math.min(a.likesToCommentsRatio, 200), bm: 200 },
     { icon: DollarSign, l: "Est. Earnings", v: `$${fmt(a.estimatedEarningsMin)}-${fmt(a.estimatedEarningsMax)}`, s: "Per sponsored post", c: "#10b981", bv: a.estimatedEarningsMax, bm: 100000 },
     { icon: Eye, l: "Est. Reach", v: fmt(a.estimatedReach), s: `${fmt(a.estimatedImpressions)} impressions`, c: "#6366f1", bv: Math.min(a.estimatedReach, 50000000), bm: 50000000 },
   ];
@@ -124,9 +124,9 @@ export default function SectionAnalytics({ profile, analysis: a }: { profile: In
         <BarChart posts={profile.recentPosts} fc={profile.followersCount} />
         {profile.recentPosts.length > 2 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-4 mt-6 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-            <LineChart data={a.likesTrend} color="#ec4899" label="Likes" />
+            <LineChart data={a.likesTrend} color="var(--text-pink, #ec4899)" label="Likes" />
             <LineChart data={a.commentsTrend} color="#3b82f6" label="Comments" />
-            <LineChart data={a.engagementTrend} color="#a855f7" label="ER %" />
+            <LineChart data={a.engagementTrend} color="var(--text-purple, #a855f7)" label="ER %" />
           </div>
         )}
       </div>

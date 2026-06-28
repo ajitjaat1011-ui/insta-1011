@@ -73,7 +73,7 @@ export default function FollowGateModal({ isOpen, onClose, onConfirmDownload, us
               boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
             initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}>
-            <div className="h-1" style={{ background: "linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045)" }} />
+            <div className="h-1" style={{ background: "linear-gradient(90deg, var(--accent-1, #833ab4), var(--accent-2, #fd1d1d), var(--text-orange, #fcb045))" }} />
             <div className="p-8 text-center">
               {phase === "downloading" && (
                 <>
@@ -119,7 +119,7 @@ export default function FollowGateModal({ isOpen, onClose, onConfirmDownload, us
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={e => e.stopPropagation()}>
 
-          <div className="h-1" style={{ background: "linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045)" }} />
+          <div className="h-1" style={{ background: "linear-gradient(90deg, var(--accent-1, #833ab4), var(--accent-2, #fd1d1d), var(--text-orange, #fcb045))" }} />
           <button onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center z-10"
             style={{ background: "rgba(255,255,255,0.05)" }}>
@@ -165,7 +165,7 @@ export default function FollowGateModal({ isOpen, onClose, onConfirmDownload, us
                       animate={{ y: [0, -4, 0] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
                       <div className="w-20 h-20 rounded-2xl overflow-hidden" style={{
-                        background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
+                        background: "linear-gradient(135deg, var(--accent-1, #833ab4), var(--accent-2, #fd1d1d), var(--text-orange, #fcb045))",
                         boxShadow: "0 0 40px rgba(131,58,180,0.4)" }}>
                         <div className="absolute inset-[3px] rounded-[13px] bg-black/90 flex items-center justify-center">
                           <Camera className="w-8 h-8 text-white" />
@@ -182,17 +182,17 @@ export default function FollowGateModal({ isOpen, onClose, onConfirmDownload, us
                   </div>
 
                   <div className="rounded-2xl p-5 mb-4" style={{
-                    background: "rgba(168,85,247,0.06)", border: "1px solid rgba(168,85,247,0.12)" }}>
+                    background: "rgba(var(--text-purple-rgb),0.06)", border: "1px solid rgba(var(--text-purple-rgb),0.12)" }}>
                     <p className="text-center text-white/50 text-sm mb-3.5">
                       One-time only: follow the creator to unlock
                     </p>
                     <motion.button onClick={handleFollowClick}
                       className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-white font-semibold text-[15px] relative overflow-hidden group"
-                      style={{ background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
+                      style={{ background: "linear-gradient(135deg, var(--accent-1, #833ab4), var(--accent-2, #fd1d1d), var(--text-orange, #fcb045))",
                         boxShadow: "0 4px 20px rgba(131,58,180,0.4)" }}
                       whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: "linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4)" }} />
+                        style={{ background: "linear-gradient(135deg, var(--text-orange, #fcb045), var(--accent-2, #fd1d1d), var(--accent-1, #833ab4))" }} />
                       <Heart className="w-5 h-5 relative z-10 fill-white" />
                       <span className="relative z-10">Follow @ARVINDJAAT1011</span>
                       <ExternalLink className="w-4 h-4 relative z-10 opacity-60" />

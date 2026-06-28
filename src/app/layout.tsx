@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { PWARegister } from "@/components/PWARegister";
 import MotionProvider from "@/components/MotionProvider";
+import WorldCupProvider from "@/components/worldcup/WorldCupProvider";
+import WorldCupOverlay from "@/components/worldcup/WorldCupOverlay";
 
 export const metadata: Metadata = {
   title: "Insta 1011 — Instagram Profile Analyzer",
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#a855f7",
+  themeColor: "var(--text-purple, #a855f7)",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -39,7 +41,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="apple-touch-icon" href="/icon-512.png" />
       </head>
       <body className="text-white antialiased min-h-screen" style={{ background: "#030305" }}>
-        <MotionProvider>{children}</MotionProvider>
+        <WorldCupProvider>
+          <MotionProvider>
+            {children}
+            <WorldCupOverlay />
+          </MotionProvider>
+        </WorldCupProvider>
         <PWARegister />
       </body>
     </html>

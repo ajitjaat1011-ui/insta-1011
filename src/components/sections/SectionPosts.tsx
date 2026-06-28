@@ -104,7 +104,7 @@ export default function SectionPosts({ profile }: { profile: InstagramProfile })
                 onError={e=>{(e.target as HTMLImageElement).style.display="none";}} />
             ) : (
               <div className="w-full h-full flex items-center justify-center"
-                style={{ background:"linear-gradient(135deg,rgba(124,58,237,0.15),rgba(219,39,119,0.15))" }}>
+                style={{ background:"linear-gradient(135deg,rgba(var(--accent-1-rgb),0.15),rgba(var(--accent-2-rgb),0.15))" }}>
                 <ImageIcon className="w-8 h-8 text-white/10" />
               </div>
             )}
@@ -123,7 +123,7 @@ export default function SectionPosts({ profile }: { profile: InstagramProfile })
             {/* Engagement bar at bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-[3px]">
               <motion.div className="h-full"
-                style={{ background:"linear-gradient(90deg,#7c3aed,#ec4899)" }}
+                style={{ background:"linear-gradient(90deg,var(--accent-1, #7c3aed),var(--text-pink, #ec4899))" }}
                 initial={{ width:0 }}
                 animate={{ width:`${Math.min(((post.likes+post.comments)/Math.max(...posts.map(p=>p.likes+p.comments),1))*100, 100)}%` }}
                 transition={{ delay:0.3+i*0.04, duration:0.8 }} />

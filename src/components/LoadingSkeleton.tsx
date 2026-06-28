@@ -48,7 +48,7 @@ export default function LoadingSkeleton() {
         <div className="flex items-center justify-center gap-[3px]">
           {Array.from({length:9}).map((_,i)=>(
             <motion.div key={i} className="w-[3px] rounded-full"
-              style={{ background:"linear-gradient(to top,#7c3aed,#ec4899)" }}
+              style={{ background:"linear-gradient(to top,var(--accent-1, #7c3aed),var(--text-pink, #ec4899))" }}
               animate={{ height:[5,22,5], opacity:[0.25,1,0.25] }}
               transition={{ duration:0.6, repeat:Infinity, delay:i*0.065, ease:"easeInOut" }} />
           ))}

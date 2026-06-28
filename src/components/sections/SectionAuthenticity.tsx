@@ -224,8 +224,8 @@ export default function SectionAuthenticity({
             { label: "Engagement Health", value: Math.min(analysis.engagementRate * 10, 100), max: 100, colors: ["#22c55e","#16a34a"] as [string,string], display: `${analysis.engagementRate}%` },
             { label: "Follower Quality", value: analysis.authenticityScore, max: 100, colors: ["#3b82f6","#6366f1"] as [string,string], display: `${analysis.authenticityScore}%` },
             { label: "Bot Risk Level", value: analysis.botScore, max: 100, colors: ["#f59e0b","#ef4444"] as [string,string], display: `${analysis.botScore}/100` },
-            { label: "Content Consistency", value: profile.postsCount > 0 ? Math.min(analysis.postsPerDay * 50, 100) : 0, max: 100, colors: ["#a855f7","#ec4899"] as [string,string], display: `${analysis.postsPerDay}/day` },
-            { label: "Bio Optimization", value: analysis.bioScore, max: 100, colors: ["#f97316","#f59e0b"] as [string,string], display: `${analysis.bioScore}/100` },
+            { label: "Content Consistency", value: profile.postsCount > 0 ? Math.min(analysis.postsPerDay * 50, 100) : 0, max: 100, colors: ["var(--text-purple, #a855f7)","var(--text-pink, #ec4899)"] as [string,string], display: `${analysis.postsPerDay}/day` },
+            { label: "Bio Optimization", value: analysis.bioScore, max: 100, colors: ["var(--text-orange, #f97316)","#f59e0b"] as [string,string], display: `${analysis.bioScore}/100` },
           ].map((gauge, i) => (
             <div key={gauge.label}>
               <div className="flex justify-between items-center mb-1.5">

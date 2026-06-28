@@ -13,10 +13,10 @@ export default function Background() {
         `,
       }} />
       {[
-        { c:"#7c3aed", s:520, x:"12%", y:"18%", d:42 },
-        { c:"#ec4899", s:400, x:"78%", y:"55%", d:50 },
+        { c:"var(--accent-1, #7c3aed)", s:520, x:"12%", y:"18%", d:42 },
+        { c:"var(--text-pink, #ec4899)", s:400, x:"78%", y:"55%", d:50 },
         { c:"#3b82f6", s:360, x:"45%", y:"82%", d:38 },
-        { c:"#f97316", s:300, x:"88%", y:"12%", d:46 },
+        { c:"var(--text-orange, #f97316)", s:300, x:"88%", y:"12%", d:46 },
       ].map((o,i)=>(
         <motion.div key={i} className="absolute rounded-full" style={{
           width:o.s, height:o.s, left:o.x, top:o.y,

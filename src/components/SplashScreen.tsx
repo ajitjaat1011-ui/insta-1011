@@ -24,7 +24,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     const angle = (i / 28) * Math.PI * 2;
     const r = 120 + (i % 3) * 40;
     const size = i % 4 === 0 ? 3 : 1.5;
-    const colors = ["#a855f7", "#ec4899", "#f97316", "#3b82f6", "#22c55e", "#fff"];
+    const colors = ["var(--text-purple, #a855f7)", "var(--text-pink, #ec4899)", "var(--text-orange, #f97316)", "#3b82f6", "#22c55e", "#fff"];
     return { i, angle, r, size, color: colors[i % colors.length] };
   }), []);
 
@@ -70,8 +70,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               style={{
                 border: `${1.5 - i * 0.15}px solid`,
                 borderColor: i % 2 === 0
-                  ? `rgba(168,85,247,${0.3 - i * 0.04})`
-                  : `rgba(236,72,153,${0.25 - i * 0.03})`,
+                  ? `rgba(var(--text-purple-rgb),${0.3 - i * 0.04})`
+                  : `rgba(var(--text-pink-rgb),${0.25 - i * 0.03})`,
                 willChange: "transform, opacity",
               }}
               initial={{ width: 0, height: 0, opacity: 0.6 }}
@@ -88,7 +88,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           <div className="relative flex flex-col items-center">
             {/* Outer glow - no blur filter */}
             <motion.div className="absolute w-52 h-52 rounded-full"
-              style={{ background: "radial-gradient(circle, rgba(168,85,247,0.22) 0%, rgba(236,72,153,0.08) 40%, transparent 70%)" }}
+              style={{ background: "radial-gradient(circle, rgba(var(--text-purple-rgb),0.22) 0%, rgba(var(--text-pink-rgb),0.08) 40%, transparent 70%)" }}
               initial={{ scale: 0, opacity: 0 }}
               animate={p >= 1 ? { scale: [0, 2.4, 1.8], opacity: [0, 0.6, 0.25] } : {}}
               transition={{ duration: 1.8 }}
@@ -101,7 +101,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               transition={{ type: "spring", stiffness: 140, damping: 14 }}
               style={{ willChange: "transform" }}>
               <div className="w-[110px] h-[110px] rounded-[30px] relative overflow-hidden" style={{
-                background: "linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)",
+                background: "linear-gradient(135deg, var(--accent-1, #833ab4) 0%, var(--accent-2, #fd1d1d) 50%, var(--text-orange, #fcb045) 100%)",
                 boxShadow: "0 0 35px rgba(131,58,180,0.35), 0 10px 30px rgba(0,0,0,0.5)",
               }}>
                 <div className="absolute inset-[3px] rounded-[27px] flex items-center justify-center overflow-hidden"
@@ -109,7 +109,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
                   {/* Rotating light */}
                   <motion.div className="absolute w-[200%] h-[200%]"
                     style={{
-                      background: "conic-gradient(from 0deg, transparent 0%, rgba(168,85,247,0.06) 25%, transparent 50%, rgba(236,72,153,0.05) 75%, transparent 100%)",
+                      background: "conic-gradient(from 0deg, transparent 0%, rgba(var(--text-purple-rgb),0.06) 25%, transparent 50%, rgba(var(--text-pink-rgb),0.05) 75%, transparent 100%)",
                     }}
                     animate={{ rotate: 360 }}
                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -121,7 +121,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
                     transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
                   />
                   <span className="text-[2.6rem] font-black text-white relative z-10 tracking-tight"
-                    style={{ textShadow: "0 0 12px rgba(168,85,247,0.4)" }}>
+                    style={{ textShadow: "0 0 12px rgba(var(--text-purple-rgb),0.4)" }}>
                     1011
                   </span>
                 </div>
@@ -132,7 +132,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
                 <motion.div key={`d${i}`} className="absolute"
                   style={{
                     width: 6, height: 6, borderRadius: "50%",
-                    background: ["#a855f7", "#ec4899", "#f97316", "#3b82f6"][i],
+                    background: ["var(--text-purple, #a855f7)", "var(--text-pink, #ec4899)", "var(--text-orange, #f97316)", "#3b82f6"][i],
                     top: "50%", left: "50%",
                     willChange: "transform",
                   }}
@@ -163,7 +163,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <h1 className="text-[3.5rem] font-black tracking-tight leading-none">
                 <span style={{
-                  background: "linear-gradient(135deg, #a855f7, #ec4899, #f97316)",
+                  background: "linear-gradient(135deg, var(--text-purple, #a855f7), var(--text-pink, #ec4899), var(--text-orange, #f97316))",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                 }}>Insta</span>
                 <span className="text-white ml-2">1011</span>
@@ -188,7 +188,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
               animate={p >= 5 ? { opacity: 1, scaleX: 1 } : {}}
               transition={{ duration: 0.3 }}>
               <motion.div className="h-full rounded-full"
-                style={{ background: "linear-gradient(90deg, #a855f7, #ec4899, #f97316)", willChange: "transform" }}
+                style={{ background: "linear-gradient(90deg, var(--text-purple, #a855f7), var(--text-pink, #ec4899), var(--text-orange, #f97316))", willChange: "transform" }}
                 initial={{ width: "0%" }}
                 animate={p >= 5 ? { width: "100%" } : {}}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
