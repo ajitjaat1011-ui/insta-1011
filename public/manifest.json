@@ -1,0 +1,28 @@
+{
+  "name": "Insta 1011 — Profile Intelligence",
+  "short_name": "Insta 1011",
+  "description": "Real Instagram profile analysis with AI-powered insights. Built by @ARVINDJAAT1011",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#030305",
+  "theme_color": "#a855f7",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["social", "utilities", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}
