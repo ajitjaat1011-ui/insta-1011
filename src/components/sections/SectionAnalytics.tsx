@@ -41,8 +41,8 @@ function LineChart({ data, color, label }: { data: number[]; color: string; labe
         </linearGradient></defs>
         <motion.path d={area} fill={`url(#${gid})`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} />
         <motion.path d={line} fill="none" stroke={color} strokeWidth={2} strokeLinecap="round"
-          strokeDasharray={len} initial={{ strokeDashoffset: len }} animate={{ strokeDashoffset: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }} />
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }} />
         {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r={2.5} fill={color} stroke="#0a0a0f" strokeWidth={1.5} />)}
       </svg>
     </div>
@@ -61,9 +61,9 @@ function BarChart({ posts, fc }: { posts: { likes: number; comments: number }[];
           const er = fc > 0 ? ((p.likes + p.comments) / fc * 100).toFixed(2) : "0";
           return (
             <div key={i} className="flex-1 h-full flex items-end group relative min-w-0">
-              <motion.div className="w-full rounded-t-sm" style={{ height: `${Math.max(h, 2)}%`, background: "linear-gradient(to top, #7c3aed, #ec4899)", opacity: 0.8 }}
-                initial={{ height: 0 }} animate={{ height: `${Math.max(h, 2)}%` }}
-                transition={{ delay: i * 0.04, duration: 0.6, ease: "easeOut" }}
+              <motion.div className="w-full rounded-t-sm" style={{ height: `${Math.max(h, 2)}%`, background: "linear-gradient(to top, #7c3aed, #ec4899)" }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.015, duration: 0.3 }}
                 whileHover={{ opacity: 1 }} />
               <div className="absolute -top-16 left-1/2 -translate-x-1/2 rounded-lg px-2 py-1 text-[9px] opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none whitespace-nowrap"
                 style={{ background: "rgba(0,0,0,0.85)", border: "1px solid rgba(255,255,255,0.08)" }}>
