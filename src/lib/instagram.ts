@@ -1,3 +1,6 @@
+import "server-only";
+import { execSync } from "child_process";
+
 export interface InstagramProfile {
   username: string;
   fullName: string;
@@ -625,31 +628,26 @@ const UA_POOL = [
 ];
 
 async function httpGet(url: string, timeoutMs = 8000): Promise<string | null> {
-  for (let attempt = 0; attempt < 2; attempt++) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const res = await fetch(url, {
-        headers: {
-          "x-ig-app-id": "936619743392459",
-          "User-Agent": UA_POOL[Math.floor(Math.random() * UA_POOL.length)],
-          "Accept": "*/*",
-          "Accept-Language": "en-US,en;q=0.9",
-          "Referer": "https://www.instagram.com/",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-        signal: controller.signal,
-        cache: "no-store",
-      });
-      clearTimeout(timer);
-      if (!res.ok) continue;
-      const text = await res.text();
-      if (text && text.length > 50) return text;
-    } catch {}
-    clearTimeout(timer);
-    await new Promise(r => setTimeout(r, 250 + attempt * 400));
-  }
-  return null;
+  const UA_POOL = [
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  ];
+  const ua = UA_POOL[Math.floor(Math.random() * UA_POOL.length)];
+  const headers = {
+    "x-ig-app-id": "936619743392459",
+    "User-Agent": ua,
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.instagram.com/",
+    "X-Requested-With": "XMLHttpRequest",
+  };
+  const h = Object.entries(headers).map(([k, v]) => `-H "${k}: ${v.replace(/"/g, '')}"`).join(" ");
+  const timeoutSec = Math.max(5, Math.floor(timeoutMs / 1000));
+  try {
+    const out = execSync(`curl -s -m ${timeoutSec} -L ${h} "${url}"`, { encoding: "utf-8", timeout: timeoutMs + 2000, stdio: ["pipe", "pipe", "pipe"], maxBuffer: 10 * 1024 * 1024 });
+    return out && out.length > 50 ? out : null;
+  } catch { return null; }
 }
 
 export async function fetchInstagramProfile(username: string): Promise<{ profile: InstagramProfile; analysis: ProfileAnalysis } | null> {
