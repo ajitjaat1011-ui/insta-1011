@@ -1,13 +1,12 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, BarChart3, Image as ImageIcon, Shield, ChevronRight, Download, FileText, Sparkles } from "lucide-react";
+import { User, BarChart3, Image as ImageIcon, Shield, ChevronRight, Download, FileText } from "lucide-react";
 import type { InstagramProfile, ProfileAnalysis } from "@/lib/instagram";
 import SectionOverview from "./sections/SectionOverview";
 import SectionAnalytics from "./sections/SectionAnalytics";
 import SectionPosts from "./sections/SectionPosts";
 import SectionAuthenticity from "./sections/SectionAuthenticity";
-import SectionAI from "./sections/SectionAI";
 import FollowGateModal, { hasFollowed } from "./FollowGateModal";
 import { generateProfilePDF } from "@/lib/generatePDF";
 
@@ -16,7 +15,6 @@ const tabs = [
   { id: "analytics", label: "Analytics", icon: BarChart3 },
   { id: "posts", label: "Posts", icon: ImageIcon },
   { id: "authenticity", label: "Authenticity", icon: Shield },
-  { id: "ai", label: "AI Report", icon: Sparkles },
 ] as const;
 
 type TabId = typeof tabs[number]["id"];
@@ -116,12 +114,11 @@ export default function ResultsView({
           {activeTab === "analytics" && <SectionAnalytics profile={profile} analysis={analysis} />}
           {activeTab === "posts" && <SectionPosts profile={profile} />}
           {activeTab === "authenticity" && <SectionAuthenticity profile={profile} analysis={analysis} />}
-          {activeTab === "ai" && <SectionAI profile={profile} analysis={analysis} />}
         </motion.div>
       </AnimatePresence>
 
       {/* Quick nav */}
-      {activeTab !== "ai" && (
+      {activeTab !== "authenticity" && (
         <motion.div className="flex justify-center mt-6"
           initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.5 }}>
           <motion.button
@@ -133,21 +130,6 @@ export default function ResultsView({
             whileHover={{ scale:1.05 }} whileTap={{ scale:0.95 }}>
             Next: {tabs[tabs.findIndex(t => t.id === activeTab) + 1]?.label}
             <ChevronRight className="w-3.5 h-3.5" />
-          </motion.button>
-        </motion.div>
-      )}
-
-      {activeTab === "ai" && (
-        <motion.div className="mt-6 text-center"
-          initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.4 }}>
-          <p className="text-white/20 text-xs mb-3">Save your complete report:</p>
-          <motion.button onClick={handleDownloadClick}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl text-white font-semibold text-sm"
-            style={{ background:"linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
-              boxShadow:"0 6px 25px rgba(131,58,180,0.4)" }}
-            whileHover={{ scale:1.05 }} whileTap={{ scale:0.95 }}>
-            <Download className="w-4 h-4" />
-            Download Full PDF Report
           </motion.button>
         </motion.div>
       )}
