@@ -3,7 +3,7 @@ import { useWorldCup } from "./WorldCupProvider";
 import { useMemo } from "react";
 
 export default function WorldCupOverlay() {
-  const { isActive, hoursLeft } = useWorldCup();
+  const { isActive } = useWorldCup();
   if (!isActive) return null;
 
   const footballs = useMemo(() => Array.from({ length: 7 }, (_, i) => ({
@@ -30,14 +30,9 @@ export default function WorldCupOverlay() {
       <div className="wc-stadium-vignette" aria-hidden="true" />
       <div className="wc-pitch-line" aria-hidden="true" />
 
-      {/* Top World Cup banner */}
+      {/* Top World Cup banner – permanent */}
       <div className="wc-top-banner">
-        <span>🇦🇷 FIFA WORLD CUP 2026 • USA • CANADA • MÉXICO • VAMOS ARGENTINA ⚽ • LIVE</span>
-        {hoursLeft < 48 && (
-          <span style={{ marginLeft: 16, background: "rgba(0,0,0,0.12)", padding: "2px 8px", borderRadius: 6, fontSize: 10 }}>
-            Reverts in {hoursLeft}h
-          </span>
-        )}
+        <span>🇦🇷 FIFA WORLD CUP 2026 • USA • CANADA • MÉXICO • VAMOS ARGENTINA ⚽</span>
       </div>
 
       {/* Floating footballs */}
