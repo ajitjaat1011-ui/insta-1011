@@ -10,108 +10,108 @@ export default function Background() {
   }, []);
 
   if (!mounted) {
-    return <div className="fixed inset-0 z-0 bg-[#040209]" />;
+    return <div className="fixed inset-0 z-0 bg-[#06050d]" />;
   }
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none select-none">
-      {/* 1. Deepest Luxury Velvet Black Base */}
-      <div className="absolute inset-0 bg-[#040209]" />
+      {/* 1. Deepest Luxury Velvet Indigo/Black Base (natively painted) */}
+      <div className="absolute inset-0 bg-[#06050d]" />
 
-      {/* 2. Soft Vignette Overlay to enhance readability and depth */}
-      <div className="absolute inset-0 z-1" style={{
-        background: "radial-gradient(circle at 50% 50%, transparent 20%, rgba(4, 2, 9, 0.8) 100%)"
+      {/* 2. Soft Vignette Overlay to increase contrast and readability */}
+      <div className="absolute inset-0 z-10" style={{
+        background: "radial-gradient(circle at 50% 50%, transparent 30%, rgba(6, 5, 13, 0.75) 100%)"
       }} />
 
-      {/* 3. Silk Aurora Flow – 3 large, slow-moving fluid light fields */}
-      <div className="absolute inset-[-10%] z-0 filter blur-[80px] md:blur-[120px] opacity-[0.48] mix-blend-screen">
+      {/* 3. Hardware-Accelerated Mobile-Safe Silk Auroras (NO parent blur filters, NO buggy blend-modes) */}
+      {/* By placing the radial gradient directly on the animated divs with transparency, it is guaranteed to paint on 100% of iOS & Android browsers! */}
+      <div className="absolute inset-0 z-0">
         
-        {/* Neon Purple Aurora Wave */}
+        {/* Glowing Brand Purple Aurora */}
         <motion.div
-          className="absolute rounded-full w-[80vw] h-[80vw] max-w-[800px] max-h-[700px]"
+          className="absolute rounded-full w-[100vw] h-[100vw] max-w-[800px] max-h-[800px]"
           style={{
             left: "5%",
-            top: "-10%",
-            background: "radial-gradient(circle at center, rgba(124, 58, 237, 0.28) 0%, rgba(124, 58, 237, 0.02) 50%, rgba(0,0,0,0) 70%)",
+            top: "-15%",
+            background: "radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(124, 58, 237, 0.05) 30%, rgba(0,0,0,0) 70%)",
             willChange: "transform",
           }}
           animate={{
-            x: [0, 60, -40, 0],
-            y: [0, -40, 50, 0],
-            scale: [1, 1.15, 0.9, 1],
+            x: [0, 45, -30, 0],
+            y: [0, -35, 40, 0],
+            scale: [1, 1.12, 0.93, 1],
           }}
           transition={{
-            duration: 25,
+            duration: 22,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
 
-        {/* Velvet Pink Aurora Wave */}
+        {/* Glowing Brand Pink Aurora */}
         <motion.div
-          className="absolute rounded-full w-[75vw] h-[75vw] max-w-[700px] max-h-[600px]"
+          className="absolute rounded-full w-[90vw] h-[90vw] max-w-[700px] max-h-[700px]"
           style={{
             right: "5%",
-            bottom: "-10%",
-            background: "radial-gradient(circle at center, rgba(236, 72, 153, 0.18) 0%, rgba(236, 72, 153, 0.01) 50%, rgba(0,0,0,0) 70%)",
+            bottom: "-15%",
+            background: "radial-gradient(circle, rgba(219, 39, 119, 0.14) 0%, rgba(219, 39, 119, 0.03) 30%, rgba(0,0,0,0) 70%)",
             willChange: "transform",
           }}
           animate={{
-            x: [0, -50, 40, 0],
-            y: [0, 50, -30, 0],
-            scale: [1, 0.9, 1.1, 1],
+            x: [0, -40, 35, 0],
+            y: [0, 40, -25, 0],
+            scale: [1, 0.94, 1.08, 1],
           }}
           transition={{
-            duration: 28,
+            duration: 26,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
 
-        {/* Luminous Royal Blue Aurora Wave */}
+        {/* Glowing Royal Blue Aurora */}
         <motion.div
-          className="absolute rounded-full w-[70vw] h-[70vw] max-w-[650px] max-h-[650px]"
+          className="absolute rounded-full w-[85vw] h-[85vw] max-w-[650px] max-h-[650px]"
           style={{
-            left: "25%",
-            top: "35%",
-            background: "radial-gradient(circle at center, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.01) 50%, rgba(0,0,0,0) 70%)",
+            left: "20%",
+            top: "30%",
+            background: "radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.04) 30%, rgba(0,0,0,0) 70%)",
             willChange: "transform",
           }}
           animate={{
-            x: [0, 30, -30, 0],
-            y: [0, -50, 25, 0],
-            scale: [1, 1.08, 0.92, 1],
+            x: [0, 25, -25, 0],
+            y: [0, -40, 20, 0],
+            scale: [1, 1.06, 0.94, 1],
           }}
           transition={{
-            duration: 32,
+            duration: 30,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
       </div>
 
-      {/* 4. Elegant, Microscopic Cosmic Dust (Extremely slow and sparse) */}
-      {/* Sits far back, creating an ultra-premium, interactive feeling */}
-      <div className="absolute inset-0 opacity-[0.15] z-0">
-        {[...Array(12)].map((_, i) => (
+      {/* 4. Sparse, slow twinkling stars in the far background */}
+      <div className="absolute inset-0 opacity-[0.12] z-0">
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-white"
             style={{
-              width: i % 2 === 0 ? "2px" : "1.2px",
-              height: i % 2 === 0 ? "2px" : "1.2px",
-              left: `${(i * 19.3) % 98}%`,
-              top: `${(i * 14.7) % 95}%`,
-              boxShadow: "0 0 8px rgba(255, 255, 255, 0.6)",
+              width: "2px",
+              height: "2px",
+              left: `${(i * 27.3) % 96}%`,
+              top: `${(i * 19.7) % 94}%`,
+              boxShadow: "0 0 6px rgba(255, 255, 255, 0.8)",
               willChange: "transform, opacity",
             }}
             animate={{
-              y: [0, -40, 0],
-              opacity: [0.1, 0.7, 0.1],
+              y: [0, -30, 0],
+              opacity: [0.1, 0.6, 0.1],
             }}
             transition={{
-              duration: 15 + (i % 3) * 6,
-              delay: -(i * 1.5),
+              duration: 18 + (i % 2) * 5,
+              delay: -(i * 2),
               repeat: Infinity,
               ease: "easeInOut",
             }}
