@@ -8,7 +8,6 @@ import SectionAnalytics from "./sections/SectionAnalytics";
 import SectionPosts from "./sections/SectionPosts";
 import SectionAuthenticity from "./sections/SectionAuthenticity";
 import FollowGateModal, { hasFollowed } from "./FollowGateModal";
-import { useWorldCup } from "./worldcup/WorldCupProvider";
 import { generateProfilePDF } from "@/lib/generatePDF";
 
 const tabs = [
@@ -26,7 +25,6 @@ export default function ResultsView({
   profile: InstagramProfile;
   analysis: ProfileAnalysis;
 }) {
-  const wc = (() => { try { return useWorldCup(); } catch { return { isActive: false }; } })();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showFollowModal, setShowFollowModal] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
@@ -52,7 +50,7 @@ export default function ResultsView({
         initial={{ opacity:0, scaleX:0 }} animate={{ opacity:1, scaleX:1 }}
         transition={{ delay:0.1, duration:0.5 }}>
         <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,transparent,rgba(var(--text-purple-rgb),0.25))" }} />
-        <span className="text-[10px] uppercase tracking-[0.3em]" style={{ color:"rgba(255,255,255,0.18)" }}>{wc.isActive ? "Analysis Results • WC26 🇦🇷" : "Analysis Results"}</span>
+        <span className="text-[10px] uppercase tracking-[0.3em]" style={{ color:"rgba(255,255,255,0.18)" }}>Analysis Results</span>
         <div className="flex-1 h-[1px]" style={{ background:"linear-gradient(90deg,rgba(var(--text-purple-rgb),0.25),transparent)" }} />
       </motion.div>
 

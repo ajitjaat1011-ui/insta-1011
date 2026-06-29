@@ -2,12 +2,10 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Loader2, Sparkles } from "lucide-react";
-import { useWorldCup } from "./worldcup/WorldCupProvider";
 
 export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:string)=>void; isLoading:boolean }) {
   const [username, setUsername] = useState("");
   const [focused, setFocused] = useState(false);
-  const wc = (() => { try { return useWorldCup(); } catch { return { isActive: false }; } })();
 
   const submit = useCallback((e:React.FormEvent)=>{
     e.preventDefault();
@@ -45,7 +43,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
           {" "}<span className="text-white">1011</span>
         </h1>
         <p className="text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color:"rgba(255,255,255,0.22)" }}>
-          {wc.isActive ? "FIFA WORLD CUP 2026 • REAL PROFILE INTELLIGENCE" : "Real Profile Intelligence"}
+          Real Profile Intelligence
         </p>
       </motion.div>
 
@@ -66,7 +64,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
           <input type="text" value={username}
             onChange={e=>setUsername(e.target.value.replace(/\s/g,""))}
             onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)}
-            placeholder={wc.isActive ? "Enter any Instagram username • Vamos Argentina 🇦🇷" : "Enter any Instagram username..."}
+            placeholder="Enter any Instagram username..."
             className="flex-1 min-w-0 bg-transparent text-white text-sm sm:text-[15px] outline-none placeholder:text-white/20"
             disabled={isLoading} autoComplete="off" spellCheck={false} autoCapitalize="off" />
           <motion.button type="submit" disabled={isLoading||!username.trim()}
@@ -75,7 +73,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
               boxShadow:"0 4px 18px rgba(var(--accent-1-rgb),0.35)" }}
             whileHover={{ scale:1.05 }} whileTap={{ scale:0.93 }}>
             {isLoading?<Loader2 className="w-4 h-4 animate-spin"/>:<Search className="w-4 h-4"/>}
-            <span className="hidden xs:inline sm:inline">{isLoading ? (wc.isActive ? "Analyzing ⚽" : "Analyzing") : (wc.isActive ? "Analyze ⚽" : "Analyze")}</span>
+            <span className="hidden xs:inline sm:inline">{isLoading ? "Analyzing" : "Analyze"}</span>
           </motion.button>
         </div>
       </motion.form>

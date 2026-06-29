@@ -1,10 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { Heart, ExternalLink } from "lucide-react";
-import { useWorldCup } from "./worldcup/WorldCupProvider";
 
 export default function Footer() {
-  const wc = (() => { try { return useWorldCup(); } catch { return { isActive: false }; } })();
   return (
     <motion.footer className="relative z-10 mt-8 pb-6"
       initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.35 }}>
@@ -36,7 +34,7 @@ export default function Footer() {
                 <span className="text-white font-bold text-[14px]">@ARVINDJAAT1011</span>
                 <span className="text-white/25 text-[10px] hidden sm:inline">• Building next-gen social analytics</span>
               </div>
-              <p className="text-white/30 text-[11px] sm:hidden leading-tight">{wc.isActive ? "FIFA World Cup 2026 • Vamos Argentina 🇦🇷" : "Insta 1011 creator"}</p>
+              <p className="text-white/30 text-[11px] sm:hidden leading-tight">Insta 1011 creator</p>
             </div>
 
             {/* Follow button – compact */}
@@ -53,7 +51,7 @@ export default function Footer() {
               whileTap={{ scale: 0.97 }}
             >
               <Heart className="w-3.5 h-3.5 fill-white" />
-              <span>{wc.isActive ? "Follow • Vamos! 🇦🇷" : "Follow"}</span>
+              <span>Follow</span>
               <ExternalLink className="w-3 h-3 opacity-60" />
             </motion.a>
           </div>
@@ -61,7 +59,7 @@ export default function Footer() {
 
         {/* Minimal legal line */}
         <p className="text-center text-white/25 text-[10px] mt-3 leading-relaxed">
-          {wc.isActive ? "FIFA World Cup 2026 × Insta 1011 • Vamos Albiceleste 🇦🇷 • " : "Insta 1011 — Real Instagram Profile Analysis • "}by @ARVINDJAAT1011 • <span className="text-white/15">Not affiliated with Meta/Instagram</span>
+          Insta 1011 — Real Instagram Profile Analysis • by @ARVINDJAAT1011 • <span className="text-white/15">Not affiliated with Meta/Instagram</span>
         </p>
       </div>
     </motion.footer>
