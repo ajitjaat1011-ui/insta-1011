@@ -30,7 +30,7 @@
   --chart-6: #f97316;
 }
 
-/* ===== LIQUID GLASS — PERFORMANCE OPTIMIZED ===== */
+/* ===== LIQUID GLASS — PREMIUM HIGH CONTRAST FROSTED PANELS ===== */
 @keyframes glass-shine {
   0%   { transform: translateX(-150%) rotate(-45deg); }
   100% { transform: translateX(250%) rotate(-45deg); }
@@ -40,68 +40,68 @@
   position: relative;
   background:
     linear-gradient(135deg,
-      rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 30%,
-      rgba(255,255,255,0.01) 60%, rgba(255,255,255,0.04) 100%);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.10);
+      rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.06) 30%,
+      rgba(255,255,255,0.03) 60%, rgba(255,255,255,0.07) 100%);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255,255,255,0.18);
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -0.5px 0 rgba(255,255,255,0.03);
+    0 12px 40px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -0.5px 0 rgba(255,255,255,0.05);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .liquid-glass::after {
   content: ''; position: absolute; top: 0; left: 0;
   width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
   transform: translateX(-150%) rotate(-45deg);
   pointer-events: none; z-index: 2; border-radius: inherit;
 }
 .liquid-glass:hover::after { animation: glass-shine 1s ease-out forwards; }
 .liquid-glass:hover {
-  border-color: rgba(255,255,255,0.15);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
 }
 
-/* Inner cards — NO backdrop-filter (perf) */
+/* Inner cards — High contrast backdrop */
 .liquid-glass-inner {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%);
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
+  border: 1px solid rgba(255,255,255,0.11);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.2), inset 0 0.5px 0 rgba(255,255,255,0.12);
   transition: all 0.3s ease;
 }
 .liquid-glass-inner:hover {
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.18);
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.16);
 }
 
-/* Glow variant – uses theme vars */
+/* Glow variant – high visibility */
 .liquid-glass-glow {
-  background: linear-gradient(135deg, rgba(var(--glass-tint),0.05) 0%, rgba(255,255,255,0.02) 50%, rgba(59,130,246,0.03) 100%);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border: 1px solid rgba(var(--glass-tint),0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 40px rgba(var(--glass-tint),0.04), inset 0 1px 0 rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, rgba(var(--glass-tint),0.08) 0%, rgba(255,255,255,0.04) 50%, rgba(59,130,246,0.05) 100%);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(var(--glass-tint),0.2);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.32), 0 0 40px rgba(var(--glass-tint),0.06), inset 0 1px 0 rgba(255,255,255,0.18);
   transition: all 0.4s ease;
 }
 .liquid-glass-glow:hover {
-  border-color: rgba(var(--glass-tint),0.18);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 0 60px rgba(var(--glass-tint),0.06), inset 0 1px 0 rgba(255,255,255,0.14);
+  border-color: rgba(var(--glass-tint),0.28);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.4), 0 0 60px rgba(var(--glass-tint),0.09), inset 0 1px 0 rgba(255,255,255,0.24);
 }
 
 /* Tabs */
 .glass-tab {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: all 0.25s ease;
 }
-.glass-tab:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); }
+.glass-tab:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.18); }
 .glass-tab-active {
-  background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.16);
-  box-shadow: 0 2px 12px rgba(var(--glass-tint),0.1);
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 2px 14px rgba(var(--glass-tint),0.15);
 }
 
 /* Themed utilities – use CSS vars so World Cup skin auto-recolors */
@@ -132,7 +132,7 @@ body { overflow-x: hidden; }
 }
 @media (max-width: 640px) {
   .liquid-glass, .liquid-glass-glow {
-    backdrop-filter: blur(20px) saturate(130%);
-    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 }

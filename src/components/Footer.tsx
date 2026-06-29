@@ -32,9 +32,9 @@ export default function Footer() {
             <div className="flex-1 min-w-[160px]">
               <div className="flex items-baseline gap-2 flex-wrap">
                 <span className="text-white font-bold text-[14px]">@ARVINDJAAT1011</span>
-                <span className="text-white/25 text-[10px] hidden sm:inline">• Building next-gen social analytics</span>
+                <span className="text-white/55 text-[10px] font-medium hidden sm:inline">• Building next-gen social analytics</span>
               </div>
-              <p className="text-white/30 text-[11px] sm:hidden leading-tight">Insta 1011 creator</p>
+              <p className="text-white/60 text-[11px] font-medium sm:hidden leading-tight">Insta 1011 creator</p>
             </div>
 
             {/* Follow button – compact */}
@@ -58,8 +58,8 @@ export default function Footer() {
         </div>
 
         {/* Minimal legal line */}
-        <p className="text-center text-white/25 text-[10px] mt-3 leading-relaxed">
-          Insta 1011 — Real Instagram Profile Analysis • by @ARVINDJAAT1011 • <span className="text-white/15">Not affiliated with Meta/Instagram</span>
+        <p className="text-center text-white/50 text-[10px] font-medium mt-3 leading-relaxed">
+          Insta 1011 — Real Instagram Profile Analysis • by @ARVINDJAAT1011 • <span className="text-white/40">Not affiliated with Meta/Instagram</span>
         </p>
       </div>
     </motion.footer>

@@ -42,7 +42,7 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Insta</span>
           {" "}<span className="text-white">1011</span>
         </h1>
-        <p className="text-[10px] tracking-[0.25em] uppercase mt-1" style={{ color:"rgba(255,255,255,0.22)" }}>
+        <p className="text-[10px] tracking-[0.25em] uppercase mt-1 text-white/55 font-semibold">
           Real Profile Intelligence
         </p>
       </motion.div>
@@ -80,12 +80,12 @@ export default function SearchSection({ onSearch, isLoading }: { onSearch:(u:str
 
       <motion.div className="flex flex-wrap items-center gap-2 mt-4 justify-center"
         initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.55 }}>
-        <Sparkles className="w-3 h-3 text-white/15" />
-        <span className="text-white/15 text-[11px]">Try:</span>
+        <Sparkles className="w-3.5 h-3.5 text-white/45" />
+        <span className="text-white/50 font-medium text-[11px]">Try:</span>
         {suggestions.map((s,i)=>(
           <motion.button key={s}
             onClick={()=>{setUsername(s);onSearch(s);}}
-            className="text-[11px] px-3 py-1 rounded-full text-white/30 hover:text-white glass-tab"
+            className="text-[11px] px-3 py-1 rounded-full text-white/55 hover:text-white font-medium glass-tab"
             initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }}
             transition={{ delay:0.65+i*0.07 }}
             whileHover={{ scale:1.08 }} whileTap={{ scale:0.9 }}
