@@ -628,11 +628,6 @@ const UA_POOL = [
 ];
 
 async function httpGet(url: string, timeoutMs = 8000): Promise<string | null> {
-  const UA_POOL = [
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (Linux; Android 14; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-  ];
   const ua = UA_POOL[Math.floor(Math.random() * UA_POOL.length)];
   const headers = {
     "x-ig-app-id": "936619743392459",
