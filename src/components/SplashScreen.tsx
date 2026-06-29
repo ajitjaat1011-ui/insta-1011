@@ -1,4 +1,5 @@
 "use client";
+// Restore clean original particles splash screen v4.1
 import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
